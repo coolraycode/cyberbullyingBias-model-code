@@ -1,4 +1,4 @@
-#THIS FILE WORKS (NO ERRORS), generates 3 nonempty graphs
+#THIS FILE WORKS, generates the 3 graphs
 
 # Commented out IPython magic to ensure Python compatibility.
 #%pip install datasets tiktoken transformers[torch] accelerate emoji==0.6.0 -U
@@ -244,7 +244,7 @@ def train_and_evaluate_model(model_name, token=None):
         per_device_eval_batch_size=8,
         num_train_epochs=3,
         weight_decay=0.01,
-        use_cpu=False,  # Ensure the models run on the CPU
+        use_cpu=False,
         logging_dir='./logs',
         logging_steps=10,
         report_to='none',
@@ -283,16 +283,6 @@ def train_and_evaluate_model(model_name, token=None):
     evaluation_results = trainer.evaluate()
     logger.info(f"Evaluation results: {evaluation_results}")
 
-    # # Handle tensor dimensions for logits extraction
-    # tokenized_inputs = tokenized_datasets['test'][:8]  # Adjust batch size if needed
-    # tokenized_inputs = {key: val.to('cpu') for key, val in tokenized_inputs.items()}  # Ensure data is on CPU
-    # with torch.no_grad():
-    #     outputs = model(**tokenized_inputs)
-    #     logits = outputs.logits
-
-    # # Ensure logits have correct dimensions before PCA
-    # logits = logits.view(-1, logits.size(-1))  # Flatten the logits tensor if necessary
-
     return evaluation_results
 
 """List of models to evaluate"""
@@ -309,7 +299,7 @@ models = [
 results = {}
 
 """Hugging Face token"""
-token = "hf_xxxxxxx" # TODO update token here
+token = "hf_xxxxxxx" # TODO update hugging face token here
 
 """Train and evaluate each model"""
 for model_name in models:
